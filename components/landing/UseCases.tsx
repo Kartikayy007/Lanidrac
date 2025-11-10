@@ -47,9 +47,9 @@ export default function UseCases() {
                   </h1>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
-                  <div className="bg-white p-8">
+                  <div className="bg-[#FCF7F5] p-8">
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 bg-[#6B8CB8] rounded flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 bg-[#6B8CB8] rounded flex items-center justify-center flex-shrink-0">
                         <Scissors className="text-white" size={24} />
                       </div>
                       <h3 className="text-[#1A1A1A] text-3xl font-gaisyr">Split</h3>
@@ -62,9 +62,9 @@ export default function UseCases() {
                     </button>
                   </div>
 
-                  <div className="bg-white p-8">
+                  <div className="bg-[#FCF7F5] p-8">
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 bg-[#F96733] rounded flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 bg-[#F96733] rounded flex items-center justify-center flex-shrink-0">
                         <Database className="text-white" size={24} />
                       </div>
                       <h3 className="text-[#1A1A1A] text-3xl font-gaisyr">Extract</h3>
@@ -77,13 +77,12 @@ export default function UseCases() {
                     </button>
                   </div>
 
-                  {/* Markdown */}
-                  <div className="bg-white p-8">
+                  <div className="bg-[#FCF7F5] p-8">
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 bg-[#867673] rounded flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 bg-[#867673] rounded flex items-center justify-center flex-shrink-0">
                         <FileText className="text-white" size={24} />
                       </div>
-                      <h3 className="text-[#1A1A1A] text-3xl font-gaisyr">Markdown</h3>
+                      <h3 className="text-[#1A1A1A] text-3xl  font-gaisyr">Markdown</h3>
                     </div>
                     <p className="text-[#533E3D] text-lg font-semibold mb-6">
                       Get clean, readable markdown text output that preserves layout.
@@ -93,10 +92,9 @@ export default function UseCases() {
                     </button>
                   </div>
 
-                  {/* RAG */}
-                  <div className="bg-white p-8">
+                  <div className="bg-[#FCF7F5] p-8">
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 bg-[#926AB0] rounded flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 bg-[#926AB0] rounded flex items-center justify-center flex-shrink-0">
                         <Grid3x3 className="text-white" size={24} />
                       </div>
                       <h3 className="text-[#1A1A1A] text-3xl font-gaisyr">RAG</h3>
@@ -112,7 +110,6 @@ export default function UseCases() {
               </td>
             </tr>
 
-            {/* Row 3: Features Grid */}
             <tr>
               <td className="border border-gray-300/30 p-8">
                 <h1 className="text-[#F3EDED] text-4xl text-center mb-6 font-gaisyr">
@@ -124,8 +121,8 @@ export default function UseCases() {
                   </h1>
                 </div>
                 <div className="grid grid-cols-4 gap-4 mb-8">
-                  <div className="bg-white p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#F3E5E5] rounded flex items-center justify-center shrink-0">
+                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-[#F3E5E5] rounded flex items-center justify-center flex-shrink-0">
                       <Clipboard className="text-[#C1554D]" size={20} />
                     </div>
                     <div>
@@ -134,8 +131,8 @@ export default function UseCases() {
                     </div>
                   </div>
 
-                  <div className="bg-white p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#FFE8D9] rounded flex items-center justify-center shrink-0">
+                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-[#FFE8D9] rounded flex items-center justify-center flex-shrink-0">
                       <Image className="text-[#F96733]" size={20} />
                     </div>
                     <div>
@@ -144,8 +141,8 @@ export default function UseCases() {
                     </div>
                   </div>
 
-                  <div className="bg-white p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#EDE5F5] rounded flex items-center justify-center shrink-0">
+                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-[#EDE5F5] rounded flex items-center justify-center flex-shrink-0">
                       <PenTool className="text-[#9B7EBD]" size={20} />
                     </div>
                     <div>
@@ -154,8 +151,8 @@ export default function UseCases() {
                     </div>
                   </div>
 
-                  <div className="bg-white p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#D9E8F5] rounded flex items-center justify-center shrink-0">
+                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-[#D9E8F5] rounded flex items-center justify-center flex-shrink-0">
                       <HardDrive className="text-[#6B8CB8]" size={20} />
                     </div>
                     <div>
@@ -164,9 +161,8 @@ export default function UseCases() {
                     </div>
                   </div>
 
-                  {/* Row 2 */}
-                  <div className="bg-white p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#EDE5F5] rounded flex items-center justify-center shrink-0">
+                  <div className="bg-[#FCF7F5] p-4 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-[#EDE5F5] rounded flex items-center justify-center flex-shrink-0">
                       <CheckSquare className="text-[#9B7EBD]" size={20} />
                     </div>
                     <div>
@@ -175,8 +171,8 @@ export default function UseCases() {
                     </div>
                   </div>
 
-                  <div className="bg-white p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#D9E8F5] rounded flex items-center justify-center shrink-0">
+                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-[#D9E8F5] rounded flex items-center justify-center flex-shrink-0">
                       <Table className="text-[#6B8CB8]" size={20} />
                     </div>
                     <div>
@@ -185,8 +181,8 @@ export default function UseCases() {
                     </div>
                   </div>
 
-                  <div className="bg-white p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#FFE8E8] rounded flex items-center justify-center shrink-0">
+                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-[#FFE8E8] rounded flex items-center justify-center flex-shrink-0">
                       <Globe className="text-[#C1554D]" size={20} />
                     </div>
                     <div>
@@ -195,8 +191,8 @@ export default function UseCases() {
                     </div>
                   </div>
 
-                  <div className="bg-white p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#FFE8D9] rounded flex items-center justify-center shrink-0">
+                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-[#FFE8D9] rounded flex items-center justify-center flex-shrink-0">
                       <ScanLine className="text-[#F96733]" size={20} />
                     </div>
                     <div>
@@ -207,7 +203,7 @@ export default function UseCases() {
                 </div>
 
                 <div className="flex justify-center">
-                  <button className="bg-white text-[#1A1A1A] px-8 py-3 font-semibold text-lg">
+                  <button className="bg-[#F4DED9] text-[#1A1A1A] px-8 py-3 font-semibold text-lg">
                     Try it now
                   </button>
                 </div>
