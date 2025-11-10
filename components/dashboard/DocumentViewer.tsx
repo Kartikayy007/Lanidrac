@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeft, Download, Copy, CheckCircle, Loader2, FileText, Eye } from "lucide-react";
+import { ArrowLeft, Download, Copy, CheckCircle, Loader2, FileText, Eye, Sparkles } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import ExtractTab from "./ExtractTab";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://51.20.18.32:8000/api/v1";
 
@@ -32,9 +33,10 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
   const [document, setDocument] = useState<DocumentDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"markdown" | "json">("markdown");
+  const [activeTab, setActiveTab] = useState<"markdown" | "extract">("markdown");
   const [copied, setCopied] = useState(false);
   const [markdownMode, setMarkdownMode] = useState<"raw" | "preview">("preview");
+  const [authToken, setAuthToken] = useState<string | null>(null);
 
   useEffect(() => {
     fetchDocument();
@@ -51,6 +53,8 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
       if (!session) {
         throw new Error("Not authenticated");
       }
+
+      setAuthToken(session.access_token);
 
       const response = await fetch(`${API_BASE_URL}/documents/document/${jobId}`, {
         headers: {
@@ -72,16 +76,13 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
   };
 
   const handleCopy = () => {
-    const content = activeTab === "markdown"
-      ? document?.markdown_output || ""
-      : JSON.stringify(document?.json_output, null, 2) || "";
-
+    const content = document?.markdown_output || "";
     navigator.clipboard.writeText(content);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDownload = async (type: "markdown" | "json") => {
+  const handleDownload = async () => {
     try {
       const supabase = createClient();
       const { data: { session } } = await supabase.auth.getSession();
@@ -91,7 +92,7 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
       }
 
       const response = await fetch(
-        `${API_BASE_URL}/documents/download/${jobId}/${type}`,
+        `${API_BASE_URL}/documents/download/${jobId}/markdown`,
         {
           headers: {
             "Authorization": `Bearer ${session.access_token}`,
@@ -107,7 +108,7 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
       const url = window.URL.createObjectURL(blob);
       const a = window.document.createElement("a");
       a.href = url;
-      a.download = `${document?.original_filename || "document"}.${type === "markdown" ? "md" : "json"}`;
+      a.download = `${document?.original_filename || "document"}.md`;
       window.document.body.appendChild(a);
       a.click();
       window.document.body.removeChild(a);
@@ -183,50 +184,56 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
             Markdown
           </button>
           <button
-            onClick={() => setActiveTab("json")}
-            className={`px-4 py-2 font-semibold transition-colors ${
-              activeTab === "json"
+            onClick={() => setActiveTab("extract")}
+            className={`px-4 py-2 font-semibold transition-colors flex items-center gap-2 ${
+              activeTab === "extract"
                 ? "text-[#8C2221] border-b-2 border-[#8C2221]"
                 : "text-[#533E3D]/70 hover:text-[#533E3D]"
             }`}
           >
-            JSON Output
+            <Sparkles className="h-4 w-4" />
+            Extract
           </button>
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-2">
-        <Button
-          onClick={handleCopy}
-          variant="outline"
-          className="font-semibold"
-        >
-          {copied ? (
-            <>
-              <CheckCircle className="h-4 w-4 mr-2" />
-              Copied!
-            </>
-          ) : (
-            <>
-              <Copy className="h-4 w-4 mr-2" />
-              Copy
-            </>
-          )}
-        </Button>
-        <Button
-          onClick={() => handleDownload(activeTab)}
-          variant="outline"
-          className="font-semibold"
-        >
-          <Download className="h-4 w-4 mr-2" />
-          Download {activeTab === "markdown" ? ".md" : ".json"}
-        </Button>
-      </div>
+      {/* Actions - Only show for markdown tab */}
+      {activeTab === "markdown" && (
+        <div className="flex gap-2">
+          <Button
+            onClick={handleCopy}
+            variant="outline"
+            className="font-semibold"
+          >
+            {copied ? (
+              <>
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Copied!
+              </>
+            ) : (
+              <>
+                <Copy className="h-4 w-4 mr-2" />
+                Copy
+              </>
+            )}
+          </Button>
+          <Button
+            onClick={handleDownload}
+            variant="outline"
+            className="font-semibold"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Download .md
+          </Button>
+        </div>
+      )}
 
       {/* Content */}
-      <div className="border border-gray-300/30 rounded-lg overflow-hidden">
-        {activeTab === "markdown" ? (
+      {activeTab === "extract" ? (
+        // Extract Tab Content
+        <ExtractTab jobId={jobId} authToken={authToken} />
+      ) : (
+        <div className="border border-gray-300/30 rounded-lg overflow-hidden">
           <div className="space-y-4">
             {/* Toggle Controls - Only show when markdown is available */}
             {document.markdown_output && (
@@ -313,20 +320,8 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
               )}
             </div>
           </div>
-        ) : (
-          <div className="bg-white p-6">
-            {document.json_output ? (
-              <pre className="whitespace-pre-wrap text-sm text-[#533E3D] font-mono">
-                {JSON.stringify(document.json_output, null, 2)}
-              </pre>
-            ) : (
-              <p className="text-[#533E3D]/70 font-semibold">
-                No JSON output available. Use the Extract feature to generate structured data.
-              </p>
-            )}
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

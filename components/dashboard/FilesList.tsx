@@ -1,29 +1,20 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { FileText, Clock, CheckCircle, XCircle, Loader2, Eye } from "lucide-react";
 import { documentsApi } from "@/lib/api/documents";
 import type { Document } from "@/lib/api/types";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function FilesList() {
+  const router = useRouter();
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const pollingInterval = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     fetchDocuments();
-
-    pollingInterval.current = setInterval(() => {
-      fetchDocuments();
-    }, 5000);
-
-    return () => {
-      if (pollingInterval.current) {
-        clearInterval(pollingInterval.current);
-      }
-    };
   }, []);
 
   const fetchDocuments = async () => {
@@ -34,7 +25,7 @@ export default function FilesList() {
       setError(null);
 
       const data = await documentsApi.listDocuments();
-      setDocuments(data);
+      setDocuments(data.documents);
     } catch (err: any) {
       setError(err.message || "Failed to load documents");
     } finally {
@@ -44,7 +35,7 @@ export default function FilesList() {
 
   const getStatusIcon = (status: Document["status"]) => {
     switch (status) {
-      case "completed":
+      case "complete":
         return <CheckCircle className="h-5 w-5 text-green-600" />;
       case "processing":
         return <Loader2 className="h-5 w-5 text-blue-600 animate-spin" />;
@@ -57,7 +48,7 @@ export default function FilesList() {
 
   const getStatusText = (status: Document["status"]) => {
     switch (status) {
-      case "completed":
+      case "complete":
         return "Complete";
       case "processing":
         return "Processing";
@@ -144,7 +135,17 @@ export default function FilesList() {
         </thead>
         <tbody>
           {documents.map((doc) => (
-            <tr key={doc.id} className="hover:bg-[#8C2221]/5 transition-colors cursour-pointer">
+            <tr
+              key={doc.id}
+              onClick={() => {
+                if (doc.status === "complete") {
+                  router.push(`/dashboard/files/${doc.job_id}`);
+                }
+              }}
+              className={`hover:bg-[#8C2221]/5 transition-colors ${
+                doc.status === "complete" ? "cursor-pointer" : ""
+              }`}
+            >
               <td className="border border-gray-300/30 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-[#533E3D]/50" />
@@ -172,7 +173,7 @@ export default function FilesList() {
                 </span>
               </td>
               <td className="border border-gray-300/30 px-4 py-3">
-                {doc.status === "completed" ? (
+                {doc.status === "complete" ? (
                   <Link
                     href={`/dashboard/files/${doc.job_id}`}
                     className="inline-flex items-center gap-2 text-[#8C2221] hover:text-[#6d2421] font-semibold transition-colors"
