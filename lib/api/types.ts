@@ -1,4 +1,4 @@
-export type DocumentStatus = 'uploaded' | 'processing' | 'textract_complete' | 'completed' | 'failed'
+export type DocumentStatus = 'uploaded' | 'processing' | 'textract_complete' | 'complete' | 'failed'
 export type ProcessingMode = 'fast' | 'smart'
 
 export interface Document {
@@ -26,9 +26,11 @@ export interface Document {
 export interface UploadResponse {
   job_id: string
   filename: string
-  original_filename: string
-  file_size: number
+  file_size_bytes: number
   mime_type: string
+  status: DocumentStatus
+  processing_mode: ProcessingMode | null
+  created_at: string
   message: string
 }
 
@@ -67,6 +69,15 @@ export interface ExtractResponse {
       value: string
     }>
   }
+}
+
+export interface DocumentStatusResponse {
+  job_id: string
+  filename: string
+  status: DocumentStatus
+  created_at: string
+  updated_at: string
+  error_message: string | null
 }
 
 export interface DocumentListResponse {

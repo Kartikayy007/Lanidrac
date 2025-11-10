@@ -5,15 +5,17 @@ import type {
   ProcessResponse,
   ExtractResponse,
   DocumentListResponse,
+  DocumentStatusResponse,
   ProcessingMode,
 } from './types'
 
 export const documentsApi = {
-  async upload(file: File): Promise<UploadResponse> {
+  async upload(file: File, mode?: ProcessingMode): Promise<UploadResponse> {
     const formData = new FormData()
     formData.append('file', file)
 
-    const response = await apiClient.post<UploadResponse>('/documents/upload', formData, {
+    const url = mode ? `/documents/upload?mode=${mode}` : '/documents/upload'
+    const response = await apiClient.post<UploadResponse>(url, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -30,8 +32,8 @@ export const documentsApi = {
     return response.data
   },
 
-  async getStatus(jobId: string): Promise<{ status: string }> {
-    const response = await apiClient.get<{ status: string }>(`/documents/status/${jobId}`)
+  async getStatus(jobId: string): Promise<DocumentStatusResponse> {
+    const response = await apiClient.get<DocumentStatusResponse>(`/documents/status/${jobId}`)
 
     return response.data
   },
