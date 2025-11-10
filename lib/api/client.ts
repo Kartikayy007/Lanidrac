@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { createClient } from '@/lib/supabase/client'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://51.20.18.32:8000/api/v1'
+
+const API_URL = process.env.NODE_ENV === 'production'
+  ? '/api/proxy/api/v1'  
+  : (process.env.NEXT_PUBLIC_API_URL || 'http://51.20.18.32:8000/api/v1')
 
 export const apiClient = axios.create({
   baseURL: API_URL,

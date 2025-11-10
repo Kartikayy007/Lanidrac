@@ -10,7 +10,10 @@ import remarkGfm from "remark-gfm";
 import { marked } from "marked";
 import ExtractTab from "./ExtractTab";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://51.20.18.32:8000/api/v1";
+
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? '/api/proxy/api/v1'
+  : (process.env.NEXT_PUBLIC_API_URL || 'http://51.20.18.32:8000/api/v1');
 
 interface DocumentDetails {
   id: string;

@@ -23,6 +23,11 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 
+
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? '/api/proxy'
+  : (process.env.NEXT_PUBLIC_API_URL || '');
+
 interface ExtractTabProps {
   jobId: string;
   authToken: string | null;
@@ -158,7 +163,7 @@ const ExtractTab: React.FC<ExtractTabProps> = ({ jobId, authToken }) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/documents/extract/${jobId}`,
+        `${API_BASE_URL}/documents/extract/${jobId}`,
         {
           method: "POST",
           headers: {

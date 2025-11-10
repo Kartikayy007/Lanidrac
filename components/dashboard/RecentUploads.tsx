@@ -5,7 +5,10 @@ import { FileText, Clock, CheckCircle, XCircle, Loader2, Eye, ArrowRight } from 
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://51.20.18.32:8000/api/v1";
+
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? '/api/proxy/api/v1'
+  : (process.env.NEXT_PUBLIC_API_URL || 'http://51.20.18.32:8000/api/v1');
 
 interface Document {
   id: string;
@@ -50,7 +53,7 @@ export default function RecentUploads() {
       }
 
       const data = await response.json();
-      setDocuments(data.slice(0, 7)); // Only show first 7
+      setDocuments(data.slice(0, 7)); 
     } catch (err: any) {
       setError(err.message || "Failed to load documents");
     } finally {
@@ -129,7 +132,7 @@ export default function RecentUploads() {
   }
 
   if (documents.length === 0) {
-    return null; // Don't show section if no uploads
+    return null; 
   }
 
   return (
