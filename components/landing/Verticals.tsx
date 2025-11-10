@@ -46,7 +46,7 @@ export default function Verticals() {
             <tr>
               <td className="border border-gray-300/30 px-18 py-8 align-bottom">
                 <div className="flex justify-start">
-                  <h1 className="p-1 bg-[#809ACF] flex justify-center items-center text-[10px] font-semibold">
+                  <h1 className="p-1 bg-[#809ACF] flex justify-center items-center text-[10px] text-[#e0dddd] font-semibold">
                     HEADER
                   </h1>
                 </div>

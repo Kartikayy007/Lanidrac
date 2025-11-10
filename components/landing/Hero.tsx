@@ -22,7 +22,7 @@ export default function Hero() {
               <td className="border border-gray-300 h-20 w-32"></td>
               <td className="border border-gray-300 h-20">
                 <div className="flex justify-start items-end h-full">
-                  <h1 className="p-1 bg-[#809ACF] flex justify-center items-center text-[10px] font-semibold">
+                  <h1 className="p-1 bg-[#809ACF] flex justify-center items-center text-[10px] text-[#F3EDED] font-semibold">
                     HEADER
                   </h1>
                 </div>
