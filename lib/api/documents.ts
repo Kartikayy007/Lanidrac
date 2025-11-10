@@ -45,9 +45,13 @@ export const documentsApi = {
   },
 
   async listDocuments(): Promise<DocumentListResponse> {
-    const response = await apiClient.get<DocumentListResponse>('/documents/list')
+    const response = await apiClient.get<Document[]>('/documents/list')
 
-    return response.data
+    // Backend returns array directly, wrap it for frontend compatibility
+    return {
+      documents: response.data || [],
+      total: response.data?.length || 0
+    }
   },
 
   async getMarkdown(jobId: string): Promise<{ markdown: string; source: string }> {

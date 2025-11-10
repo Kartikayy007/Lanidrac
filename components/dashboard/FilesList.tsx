@@ -19,15 +19,16 @@ export default function FilesList() {
 
   const fetchDocuments = async () => {
     try {
-      if (documents.length === 0) {
+      if (!documents || documents.length === 0) {
         setIsLoading(true);
       }
       setError(null);
 
       const data = await documentsApi.listDocuments();
-      setDocuments(data.documents);
-    } catch (err: any) {
-      setError(err.message || "Failed to load documents");
+      setDocuments(data?.documents || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load documents");
+      setDocuments([]);
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +92,7 @@ export default function FilesList() {
     );
   }
 
-  if (documents.length === 0) {
+  if (!documents || documents.length === 0) {
     return (
       <div className="bg-[#f3eded17] p-6 sm:p-12 border border-gray-300/30 text-center">
         <FileText className="h-16 w-16 mx-auto mb-4 text-[#533E3D]/50" />

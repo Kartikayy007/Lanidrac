@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeft, Download, Copy, CheckCircle, Loader2, FileText, Eye, Sparkles } from "lucide-react";
+import { ArrowLeft, Download, Copy, CheckCircle, Loader2, FileText, Eye, Sparkles, Globe } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { marked } from "marked";
 import ExtractTab from "./ExtractTab";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://51.20.18.32:8000/api/v1";
@@ -33,14 +34,26 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
   const [document, setDocument] = useState<DocumentDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"markdown" | "extract">("markdown");
+  const [activeTab, setActiveTab] = useState<"markdown" | "html" | "extract">("markdown");
   const [copied, setCopied] = useState(false);
   const [markdownMode, setMarkdownMode] = useState<"raw" | "preview">("preview");
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [htmlContent, setHtmlContent] = useState<string>("");
 
   useEffect(() => {
     fetchDocument();
   }, [jobId]);
+
+  useEffect(() => {
+    if (document?.markdown_output) {
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+      });
+      const html = marked.parse(document.markdown_output);
+      setHtmlContent(html as string);
+    }
+  }, [document?.markdown_output]);
 
   const fetchDocument = async () => {
     try {
@@ -76,10 +89,111 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
   };
 
   const handleCopy = () => {
-    const content = document?.markdown_output || "";
+    const content = activeTab === "html" ? htmlContent : document?.markdown_output || "";
     navigator.clipboard.writeText(content);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownloadHtml = () => {
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${document?.original_filename || "Document"}</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 24px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+    h1 { font-size: 2em; border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+    h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+    h3 { font-size: 1.25em; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    tr:hover {
+      background: #f9f9f9;
+    }
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "Courier New", monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background: #f5f5f5;
+      padding: 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+    }
+    ul, ol {
+      padding-left: 2em;
+      margin: 16px 0;
+    }
+    li {
+      margin: 8px 0;
+    }
+    blockquote {
+      border-left: 4px solid #ddd;
+      padding-left: 16px;
+      margin: 16px 0;
+      color: #666;
+      font-style: italic;
+    }
+    a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  ${htmlContent}
+</body>
+</html>`;
+
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = window.document.createElement("a");
+    a.href = url;
+    a.download = `${document?.original_filename || "document"}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const handleDownload = async () => {
@@ -145,7 +259,6 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <Link
@@ -184,6 +297,17 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
             Markdown
           </button>
           <button
+            onClick={() => setActiveTab("html")}
+            className={`px-4 py-2 font-semibold transition-colors flex items-center gap-2 ${
+              activeTab === "html"
+                ? "text-[#8C2221] border-b-2 border-[#8C2221]"
+                : "text-[#533E3D]/70 hover:text-[#533E3D]"
+            }`}
+          >
+            <Globe className="h-4 w-4" />
+            HTML
+          </button>
+          <button
             onClick={() => setActiveTab("extract")}
             className={`px-4 py-2 font-semibold transition-colors flex items-center gap-2 ${
               activeTab === "extract"
@@ -197,7 +321,6 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
         </div>
       </div>
 
-      {/* Actions - Only show for markdown tab */}
       {activeTab === "markdown" && (
         <div className="flex gap-2">
           <Button
@@ -217,25 +340,72 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
               </>
             )}
           </Button>
+        </div>
+      )}
+
+      {activeTab === "html" && (
+        <div className="flex gap-2">
           <Button
-            onClick={handleDownload}
+            onClick={handleCopy}
+            variant="outline"
+            className="font-semibold"
+          >
+            {copied ? (
+              <>
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Copied!
+              </>
+            ) : (
+              <>
+                <Copy className="h-4 w-4 mr-2" />
+                Copy HTML
+              </>
+            )}
+          </Button>
+          <Button
+            onClick={handleDownloadHtml}
             variant="outline"
             className="font-semibold"
           >
             <Download className="h-4 w-4 mr-2" />
-            Download .md
+            Download HTML
           </Button>
         </div>
       )}
 
-      {/* Content */}
       {activeTab === "extract" ? (
-        // Extract Tab Content
         <ExtractTab jobId={jobId} authToken={authToken} />
+      ) : activeTab === "html" ? (
+        <div className="border border-gray-300/30 rounded-lg overflow-hidden">
+          <div className="bg-white p-6">
+            {htmlContent ? (
+              <div
+                className="prose prose-slate max-w-none
+                  prose-headings:text-[#533E3D] prose-headings:font-gaisyr
+                  prose-p:text-[#533E3D] prose-p:leading-relaxed
+                  prose-strong:text-[#533E3D] prose-strong:font-semibold
+                  prose-code:text-[#8C2221] prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+                  prose-pre:bg-gray-900 prose-pre:text-gray-100
+                  prose-a:text-[#8C2221] prose-a:no-underline hover:prose-a:underline
+                  prose-table:border-collapse prose-table:w-full
+                  prose-th:border prose-th:border-gray-300 prose-th:bg-gray-100 prose-th:p-3 prose-th:text-left prose-th:font-semibold
+                  prose-td:border prose-td:border-gray-300 prose-td:p-3
+                  prose-ul:list-disc prose-ul:pl-6
+                  prose-ol:list-decimal prose-ol:pl-6
+                  prose-li:text-[#533E3D]
+                  prose-blockquote:border-l-4 prose-blockquote:border-[#8C2221] prose-blockquote:pl-4 prose-blockquote:italic"
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+              />
+            ) : (
+              <p className="text-[#533E3D]/70 font-semibold">
+                No HTML content available
+              </p>
+            )}
+          </div>
+        </div>
       ) : (
         <div className="border border-gray-300/30 rounded-lg overflow-hidden">
           <div className="space-y-4">
-            {/* Toggle Controls - Only show when markdown is available */}
             {document.markdown_output && (
               <div className="flex items-center gap-2 p-4 border-b border-gray-300/30 bg-gray-50">
                 <span className="text-sm text-[#533E3D]/70 font-semibold mr-2">View Mode:</span>
@@ -260,16 +430,13 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
               </div>
             )}
 
-            {/* Markdown Content */}
             <div className="bg-white p-6">
               {document.markdown_output ? (
                 markdownMode === "raw" ? (
-                  // Raw Mode: Plain text
                   <pre className="whitespace-pre-wrap text-sm text-[#533E3D] font-mono leading-relaxed">
                     {document.markdown_output}
                   </pre>
                 ) : (
-                  // Preview Mode: Rendered markdown
                   <div className="prose prose-sm max-w-none
                     prose-headings:text-[#533E3D] prose-headings:font-gaisyr
                     prose-p:text-[#533E3D] prose-p:leading-relaxed
@@ -288,7 +455,6 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{
-                        // Custom checkbox rendering
                         input: ({ node, ...props }) => {
                           if (props.type === "checkbox") {
                             return (
@@ -301,7 +467,6 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
                           }
                           return <input {...props} />;
                         },
-                        // Custom table styling
                         table: ({ node, ...props }) => (
                           <div className="overflow-x-auto my-4">
                             <table {...props} className="min-w-full border border-gray-300" />
