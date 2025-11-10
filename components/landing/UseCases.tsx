@@ -17,22 +17,22 @@ import {
 
 export default function UseCases() {
   return (
-    <section className="flex justify-center bg-[#8C2221]">
-      <div className="w-6xl">
+    <section className="flex justify-center bg-[#8C2221] px-4 sm:px-0">
+      <div className="w-full max-w-6xl">
         <table className="w-full border-collapse border border-gray-300/30">
           <tbody>
             <tr>
-              <td className="border border-gray-300/30 px-18 py-8 align-bottom">
+              <td className="border border-gray-300/30 px-4 sm:px-8 lg:px-18 py-6 sm:py-8 align-bottom">
                 <div className="flex justify-start">
-                  <h1 className="p-1 bg-[#809ACF] flex justify-center items-center text-[10px] font-semibold">
+                  <h1 className="p-1 bg-[#809ACF] flex justify-center items-center text-[8px] sm:text-[10px] font-semibold">
                     HEADER
                   </h1>
                 </div>
                 <div className="text-center py-2 border border-gray-300/30 bg-[#f3eded17]">
-                  <h1 className="text-[#F3EDED] text-6xl mb-4 font-gaisyr">
+                  <h1 className="text-[#F3EDED] text-3xl sm:text-5xl lg:text-6xl mb-2 sm:mb-4 font-gaisyr">
                     Use Cases
                   </h1>
-                  <p className="text-[#F3EDED] text-lg">
+                  <p className="text-[#F3EDED] text-sm sm:text-lg px-2">
                     We handle the hardest pdfs and images— with bounding boxes you can trust, HIPAA compliance, and on-prem options.
                   </p>
                 </div>
@@ -40,13 +40,13 @@ export default function UseCases() {
             </tr>
 
             <tr>
-              <td className="border border-gray-300/30 p-8 align-bottom">
+              <td className="border border-gray-300/30 p-4 sm:p-8 align-bottom">
                 <div className="flex justify-start">
-                  <h1 className="p-1 bg-[#926AB0] flex justify-center items-center text-[10px] font-semibold text-[#F3EDED] ">
+                  <h1 className="p-1 bg-[#926AB0] flex justify-center items-center text-[8px] sm:text-[10px] font-semibold text-[#F3EDED] ">
                     FEATURE-BLOCK
                   </h1>
                 </div>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                   <div className="bg-[#FCF7F5] p-8">
                     <div className="flex items-start gap-4 mb-4">
                       <div className="w-12 h-12 bg-[#6B8CB8] rounded flex items-center justify-center flex-shrink-0">
@@ -111,16 +111,16 @@ export default function UseCases() {
             </tr>
 
             <tr>
-              <td className="border border-gray-300/30 p-8">
-                <h1 className="text-[#F3EDED] text-4xl text-center mb-6 font-gaisyr">
+              <td className="border border-gray-300/30 p-4 sm:p-8">
+                <h1 className="text-[#F3EDED] text-2xl sm:text-4xl text-center mb-4 sm:mb-6 font-gaisyr">
                   Features
                 </h1>
                 <div className="flex justify-start">
-                  <h1 className="p-1 bg-[#809ACF] flex justify-center items-center text-[10px] font-semibold text-[#F3EDED]">
+                  <h1 className="p-1 bg-[#809ACF] flex justify-center items-center text-[8px] sm:text-[10px] font-semibold text-[#F3EDED]">
                     FEATURE-GRID
                   </h1>
                 </div>
-                <div className="grid grid-cols-4 gap-4 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                   <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
                     <div className="w-10 h-10 bg-[#F3E5E5] rounded flex items-center justify-center flex-shrink-0">
                       <Clipboard className="text-[#C1554D]" size={20} />

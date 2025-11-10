@@ -30,7 +30,7 @@ export default function SignupPage() {
                 </div>
 
                 <div className="p-8">
-                  <h2 className="text-4xl font-bold text-[#533E3D] text-center mb-2">
+                  <h2 className="text-4xl font-bold text-[#533E3D] text-center mb-2 font-gaisyr">
                     Create Account
                   </h2>
                   <p className="text-center text-gray-600 text-sm mb-8">

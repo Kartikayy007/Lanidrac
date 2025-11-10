@@ -5,7 +5,11 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { signupSchema, signinSchema } from '@/lib/validations/auth'
 
-export async function signUp(formData: FormData) {
+type FormState = {
+  error?: string
+} | undefined
+
+export async function signUp(prevState: FormState, formData: FormData): Promise<FormState> {
   const supabase = await createClient()
 
   const data = {
@@ -17,7 +21,7 @@ export async function signUp(formData: FormData) {
   const result = signupSchema.safeParse(data)
 
   if (!result.success) {
-    return { error: result.error.errors[0].message }
+    return { error: result.error.issues[0].message }
   }
 
   const { error } = await supabase.auth.signUp({
@@ -33,7 +37,7 @@ export async function signUp(formData: FormData) {
   redirect('/dashboard')
 }
 
-export async function signIn(formData: FormData) {
+export async function signIn(prevState: FormState, formData: FormData): Promise<FormState> {
   const supabase = await createClient()
 
   const data = {
@@ -44,7 +48,7 @@ export async function signIn(formData: FormData) {
   const result = signinSchema.safeParse(data)
 
   if (!result.success) {
-    return { error: result.error.errors[0].message }
+    return { error: result.error.issues[0].message }
   }
 
   const { error } = await supabase.auth.signInWithPassword({
