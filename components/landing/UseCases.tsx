@@ -127,17 +127,17 @@ export default function UseCases() {
                     </div>
                     <div>
                       <h4 className="text-[#1A1A1A] text-lg font-bold mb-1">Faxed Forms</h4>
-                      <p className="text-[#999] text-sm">Scan all formats</p>
+                      <p className="text-[#533e3d7b] text-md font-semibold">Scan all formats</p>
                     </div>
                   </div>
 
-                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4">
+                  <div className="bg-[#FCF7F5] p-6 flex items-center gap-4 text-[#533E3D]">
                     <div className="w-10 h-10 bg-[#FFE8D9] rounded flex items-center justify-center flex-shrink-0">
                       <Image className="text-[#F96733]" size={20} />
                     </div>
                     <div>
                       <h4 className="text-[#1A1A1A] text-lg font-bold mb-1">Diagram Metadata</h4>
-                      <p className="text-[#999] text-sm">Auto classify</p>
+                      <p className="text-[#533e3d7b] text-md font-semibold">Auto classify</p>
                     </div>
                   </div>
 
@@ -147,7 +147,7 @@ export default function UseCases() {
                     </div>
                     <div>
                       <h4 className="text-[#1A1A1A] text-lg font-bold mb-1">Signature Detection</h4>
-                      <p className="text-[#999] text-sm">Forensic accuracy</p>
+                      <p className="text-[#533e3d7b] text-md font-semibold">Forensic accuracy</p>
                     </div>
                   </div>
 
@@ -157,7 +157,7 @@ export default function UseCases() {
                     </div>
                     <div>
                       <h4 className="text-[#1A1A1A] text-lg font-bold mb-1">Source Citations</h4>
-                      <p className="text-[#999] text-sm">Full extraction</p>
+                      <p className="text-[#533e3d7b] text-md font-semibold">Full extraction</p>
                     </div>
                   </div>
 
@@ -167,7 +167,7 @@ export default function UseCases() {
                     </div>
                     <div>
                       <h4 className="text-[#1A1A1A] text-lg font-bold mb-1">Checkmarks/Circles</h4>
-                      <p className="text-[#999] text-sm">Scan all formats</p>
+                      <p className="text-[#533e3d7b] text-md font-semibold">Scan all formats</p>
                     </div>
                   </div>
 
@@ -177,7 +177,7 @@ export default function UseCases() {
                     </div>
                     <div>
                       <h4 className="text-[#1A1A1A] text-lg font-bold mb-1">Complex tables</h4>
-                      <p className="text-[#999] text-sm">PDF-converted csvs</p>
+                      <p className="text-[#533e3d7b] text-md font-semibold">PDF-converted csvs</p>
                     </div>
                   </div>
 
@@ -187,7 +187,7 @@ export default function UseCases() {
                     </div>
                     <div>
                       <h4 className="text-[#1A1A1A] text-lg font-bold mb-1">Multilingual</h4>
-                      <p className="text-[#999] text-sm">100+ languages</p>
+                      <p className="text-[#533e3d7b] text-md font-semibold">100+ languages</p>
                     </div>
                   </div>
 
@@ -203,7 +203,7 @@ export default function UseCases() {
                 </div>
 
                 <div className="flex justify-center">
-                  <button className="bg-[#F4DED9] text-[#1A1A1A] px-8 py-3 font-semibold text-lg">
+                  <button className="bg-[#F4DED9] text-[#533E3D] px-8 py-3 font-semibold text-lg">
                     Try it now
                   </button>
                 </div>

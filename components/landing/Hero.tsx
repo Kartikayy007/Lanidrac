@@ -15,7 +15,7 @@ export default function Hero() {
           }
         }
       `}</style>
-      <div className="w-6xl bg-[#FCF7F6] shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.1),10px_0_15px_-3px_rgba(0,0,0,0.1),-10px_0_15px_-3px_rgba(0,0,0,0.1)] animate-[fadeInUp_0.8s_ease-out]">
+      <div className="w-6xl bg-[#FCF7F6] shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.1),10px_0_15px_-3px_rgba(0,0,0,0.1),-10px_0_15px_-3px_rgba(0,0,0,0.1)] animate-[fadeInUp_0.2s_ease-out]">
         <table className="w-full border-collapse border border-gray-300">
           <tbody>
             <tr>
