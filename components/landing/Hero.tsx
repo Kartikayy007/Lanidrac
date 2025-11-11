@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Hero() {
   return (
     <section className="flex justify-center items-end mt-10 sm:mt-20 -z-10 px-4 sm:px-0">
@@ -93,9 +95,9 @@ export default function Hero() {
               <td className="border border-gray-300 w-8 sm:w-32"></td>
               <td className="border border-gray-300">
                 <div className="text-sm sm:text-xl flex justify-start gap-2 sm:gap-4 flex-wrap">
-                  <button className="bg-[#8C2221] text-[#F3EDED] p-2 sm:p-3 cursor-pointer font-semibold">
+                  <Link href="/signup" className="bg-[#8C2221] text-[#F3EDED] p-2 sm:p-3 cursor-pointer font-semibold">
                     Try it now.
-                  </button>
+                  </Link>
                   <button className="text-[#533E3D] bg-transparent cursor-pointer font-semibold border border-gray-300 p-2 sm:p-3">
                     Contact us
                   </button>

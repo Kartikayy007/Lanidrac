@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function AboutUs() {
   return (
     <section className="flex justify-center px-4 sm:px-0">
@@ -36,9 +38,9 @@ export default function AboutUs() {
                 <div className="bg-[#8C2221] font-semibold p-6 sm:p-12 border border-gray-300/30">
                   <div className="text-[#F3EDED] space-y-4 sm:space-y-6">
                     <p className="text-sm sm:text-lg leading-relaxed">
-                      Hi all - Devi and Jianna here! We first met in 2023 and built our first company together, Leafpress (YC S23),
+                      Hi all - Devi, Jianna and <span className="text-[#F96733]">Kartikay</span> here! We first met in 2023 and built our first company Leafpress (YC S23) together.
                       an energy management platform. At its core, Leafpress parsed utility data for customers - and the hardest
-                      part, by far, was processing utility bills.
+                      part, by far, was processing utility bills. <span className="text-[#F96733]">Kartikay</span> joined later after he made a whole MVP of Cardinal in 2025.
                     </p>
 
                     <p className="text-sm sm:text-lg leading-relaxed">
@@ -66,12 +68,23 @@ export default function AboutUs() {
 
                     <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mt-6 sm:mt-8">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-300 rounded-full"></div>
-                        <div className="text-xl sm:text-2xl font-gaisyr italic">Devi</div>
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-300 rounded-full">
+                          <img src="/devi.avif" alt="Devi" className="w-full h-full object-cover rounded-full" />
+                        </div>
+                        <div className="text-xl sm:text-2xl">Devi</div>
                       </div>
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-300 rounded-full"></div>
-                        <div className="text-xl sm:text-2xl font-gaisyr italic">Jianna</div>
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-300 rounded-full">
+                          <img src="/jinna.avif" alt="Jianna" className="w-full h-full object-cover rounded-full" />
+                        </div>
+                        <div className="text-xl sm:text-2xl">Jianna</div>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-300 rounded-full">
+                          <img src="/kartikay.png" alt="Kartikay" className="w-full h-full object-cover rounded-full" />
+                        </div>
+                        <div className="text-xl sm:text-2xl">Kartikay</div>
                       </div>
                     </div>
                   </div>
@@ -92,9 +105,9 @@ export default function AboutUs() {
                     Want to chat about your document processing challenges?
                   </h2>
                   <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                    <button className="bg-[#8C2221] text-white px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold hover:bg-[#6d2421] transition-colors">
+                    <Link href="/signup" className="bg-[#8C2221] text-white px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold hover:bg-[#6d2421] transition-colors">
                       Try it now
-                    </button>
+                    </Link>
                     <button className="bg-white text-[#533E3D] px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold border border-gray-300 hover:bg-gray-100 transition-colors">
                       Contact us
                     </button>

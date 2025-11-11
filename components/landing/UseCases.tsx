@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Scissors,
   Database,
@@ -203,9 +204,9 @@ export default function UseCases() {
                 </div>
 
                 <div className="flex justify-center">
-                  <button className="bg-[#F4DED9] text-[#533E3D] px-8 py-3 font-semibold text-lg">
+                  <Link href="/signup" className="bg-[#F4DED9] text-[#533E3D] px-8 py-3 font-semibold text-lg">
                     Try it now
-                  </button>
+                  </Link>
                 </div>
               </td>
             </tr>
