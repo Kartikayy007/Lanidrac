@@ -62,7 +62,7 @@ export default function FilesList() {
 
   const getModeText = (mode: Document["processing_mode"]) => {
     if (!mode) return "-";
-    return mode === "fast" ? "Fast (3-5s)" : "Smart (8-12s)";
+    return mode === "fast" ? "Fast" : "Smart";
   };
 
   const formatDate = (dateString: string) => {

@@ -276,7 +276,7 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
           </h1>
           <div className="flex flex-wrap gap-4 text-sm text-[#533E3D]/70 font-semibold">
             <span>
-              Mode: {document.processing_mode === "fast" ? "Fast (3-5s)" : "Smart (8-12s)"}
+              Mode: {document.processing_mode === "fast" ? "Fast" : "Smart"}
             </span>
             <span>•</span>
             <span>
