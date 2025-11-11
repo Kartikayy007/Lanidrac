@@ -40,9 +40,11 @@ async function proxyRequest(
   method: string
 ) {
   try {
-    const url = `${BACKEND_URL}/${path.join('/')}`
+    const searchParams = request.nextUrl.searchParams.toString()
+    const queryString = searchParams ? `?${searchParams}` : ''
+    const url = `${BACKEND_URL}/${path.join('/')}${queryString}`
 
-    
+
     let body = undefined
     if (method === 'POST' || method === 'PUT') {
       const contentType = request.headers.get('content-type')
