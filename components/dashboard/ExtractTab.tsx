@@ -163,7 +163,7 @@ const ExtractTab: React.FC<ExtractTabProps> = ({ jobId, authToken }) => {
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/documents/extract/${jobId}`,
+        `${API_BASE_URL}/api/v1/documents/extract/${jobId}`,
         {
           method: "POST",
           headers: {
@@ -233,7 +233,6 @@ const ExtractTab: React.FC<ExtractTabProps> = ({ jobId, authToken }) => {
 
   return (
     <div className="space-y-4">
-      {/* Schema Input Section */}
       <Card>
         <CardContent className="p-6">
           <div className="space-y-4">
