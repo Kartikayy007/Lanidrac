@@ -27,6 +27,7 @@ interface DocumentDetails {
   markdown_output: string | null;
   json_output: object | null;
   error_message: string | null;
+  file_path: string | null;
 }
 
 interface DocumentViewerProps {
@@ -42,6 +43,8 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
   const [markdownMode, setMarkdownMode] = useState<"raw" | "preview">("preview");
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [htmlContent, setHtmlContent] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
     fetchDocument();
@@ -84,6 +87,10 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
 
       const data = await response.json();
       setDocument(data);
+
+      if (data.file_path) {
+        setImageUrl(data.file_path);
+      }
     } catch (err: any) {
       setError(err.message || "Failed to load document");
     } finally {
@@ -285,6 +292,33 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
           </div>
         </div>
       </div>
+
+      {imageUrl && (
+        <div className="border border-gray-300/30 rounded-lg overflow-hidden bg-white">
+          <div className="bg-gray-50 px-4 py-3 border-b border-gray-300/30">
+            <h2 className="text-[#533E3D] font-semibold">Original Document</h2>
+          </div>
+          <div className="p-4 flex justify-center">
+            {imageLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 text-[#8C2221] animate-spin" />
+              </div>
+            ) : (
+              <img
+                src={imageUrl}
+                alt={document.original_filename}
+                className="max-w-full h-auto rounded shadow-lg"
+                onLoad={() => setImageLoading(false)}
+                onLoadStart={() => setImageLoading(true)}
+                onError={() => {
+                  setImageLoading(false);
+                  setImageUrl(null);
+                }}
+              />
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="border-b border-gray-300/30">
