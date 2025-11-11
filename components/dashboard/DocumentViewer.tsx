@@ -293,33 +293,6 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
         </div>
       </div>
 
-      {imageUrl && (
-        <div className="border border-gray-300/30 rounded-lg overflow-hidden bg-white">
-          <div className="bg-gray-50 px-4 py-3 border-b border-gray-300/30">
-            <h2 className="text-[#533E3D] font-semibold">Original Document</h2>
-          </div>
-          <div className="p-4 flex justify-center">
-            {imageLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 text-[#8C2221] animate-spin" />
-              </div>
-            ) : (
-              <img
-                src={imageUrl}
-                alt={document.original_filename}
-                className="max-w-full h-auto rounded shadow-lg"
-                onLoad={() => setImageLoading(false)}
-                onLoadStart={() => setImageLoading(true)}
-                onError={() => {
-                  setImageLoading(false);
-                  setImageUrl(null);
-                }}
-              />
-            )}
-          </div>
-        </div>
-      )}
-
       {/* Tabs */}
       <div className="border-b border-gray-300/30">
         <div className="flex gap-4">
@@ -521,6 +494,34 @@ export default function DocumentViewer({ jobId }: DocumentViewerProps) {
                 </p>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Original Document Image - Bottom */}
+      {imageUrl && (
+        <div className="border border-gray-300/30 rounded-lg overflow-hidden bg-white mt-6">
+          <div className="bg-gray-50 px-4 py-3 border-b border-gray-300/30">
+            <h2 className="text-[#533E3D] font-semibold">Original Document</h2>
+          </div>
+          <div className="p-4 flex justify-center">
+            {imageLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 text-[#8C2221] animate-spin" />
+              </div>
+            ) : (
+              <img
+                src={imageUrl}
+                alt={document.original_filename}
+                className="max-w-full h-auto rounded shadow-lg"
+                onLoad={() => setImageLoading(false)}
+                onLoadStart={() => setImageLoading(true)}
+                onError={() => {
+                  setImageLoading(false);
+                  setImageUrl(null);
+                }}
+              />
+            )}
           </div>
         </div>
       )}
